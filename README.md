@@ -26,7 +26,7 @@ Then add Firebase in you iOS project.
   self.T-Chat
   ```
 
-  ![bundleID](bundleID.png)
+  ![bundleID](resourcesREADME/bundleID.png)
 
 * **Download config file**
 
@@ -80,7 +80,6 @@ Go to the Rules and change false to true:
 
 ```json
 {
-  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
   "rules": {
     ".read": true,
     ".write": true
