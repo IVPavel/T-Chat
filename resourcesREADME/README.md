@@ -12,7 +12,7 @@
 
 To register or sign in to your account and to create a new project do it step by step. By doing this, you can see the project overview. Then select iOS.
 
-**![projextOverview](/Users/atom/Desktop/for github/projextOverview.png)**
+**![projextOverview](projextOverview.png)**
 
 Then add Firebase in you iOS project.
 
@@ -26,7 +26,7 @@ Then add Firebase in you iOS project.
   self.T-Chat
   ```
 
-  ![bundleID](/Users/atom/Desktop/for github/bundleID.png)
+  ![bundleID](bundleID.png)
 
 * **Download config file**
 
@@ -74,7 +74,7 @@ On the left, select Authentication, set up the sing-in method, turn on "Email/Pa
 
 Then select Database and create database. Choose Realtime Database.
 
-![realtimeDatabese](/Users/atom/Desktop/for github/realtimeDatabese.png)
+![realtimeDatabese](realtimeDatabese.png)
 
 Go to the Rules and change false to true:
 
