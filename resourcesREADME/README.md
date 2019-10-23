@@ -1,6 +1,6 @@
 ## T-Chat
 
-![example](/Users/atom/Desktop/for github/example.gif)
+![example](example.gif)
 
 ### Installation
 
