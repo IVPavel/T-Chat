@@ -1,6 +1,6 @@
 ## T-Chat
 
-![example](example.gif)
+![resourcesREADME](example.gif)
 
 ### Installation
 
