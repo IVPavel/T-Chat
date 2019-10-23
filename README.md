@@ -12,13 +12,13 @@
 
 To register or sign in to your account and to create a new project do it step by step. By doing this, you can see the project overview. Then select iOS.
 
-**![projextOverview](projextOverview.png)**
+**![projextOverview](resourcesREADME/projextOverview.png)**
 
 Then add Firebase in you iOS project.
 
 * **Register app**
 
-  ![RegisterApp](/Users/atom/Desktop/for github/RegisterApp.png)
+  ![RegisterApp](resourcesREADME/RegisterApp.png)
 
   You can find Bundle ID  in T-Chat XCode project -> General tab -> Bundle Identifier
 
@@ -74,7 +74,7 @@ On the left, select Authentication, set up the sing-in method, turn on "Email/Pa
 
 Then select Database and create database. Choose Realtime Database.
 
-![realtimeDatabese](realtimeDatabese.png)
+![realtimeDatabese](resourcesREADME/realtimeDatabese.png)
 
 Go to the Rules and change false to true:
 
