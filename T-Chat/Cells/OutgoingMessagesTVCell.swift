@@ -1,0 +1,56 @@
+//
+//  IncomingMessagesTVCell.swift
+//  T-Chat
+//
+//  Created by Pavel Ivanov on 22.10.2019.
+//  Copyright © 2019 Pavel Ivanov. All rights reserved.
+//
+
+import UIKit
+
+class OutgoingMessagesTVCell: UITableViewCell {
+    
+    let view: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .blue
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    let messageTextLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupUICell()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    fileprivate func setupUICell() {
+        contentView.addSubview(view)
+        view.addSubview(messageTextLabel)
+        
+        contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 4).isActive = true
+        view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4).isActive = true
+        contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 8).isActive = true
+        view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentView.frame.width / 3).isActive = true
+        
+        messageTextLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 8).isActive = true
+        messageTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true
+        view.bottomAnchor.constraint(equalTo: messageTextLabel.bottomAnchor, constant: 8).isActive = true
+        view.trailingAnchor.constraint(equalTo: messageTextLabel.trailingAnchor, constant: 8).isActive = true
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+    }
+}
