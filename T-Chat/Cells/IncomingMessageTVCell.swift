@@ -13,14 +13,14 @@ class IncomingMessageTVCell: UITableViewCell {
     let view: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .gray
+        view.backgroundColor = .white
         view.layer.cornerRadius = 12
         return view
     }()
     let messageTextLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textColor = .white
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

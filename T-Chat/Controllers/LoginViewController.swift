@@ -30,7 +30,6 @@ class LoginViewController: UIViewController {
         passwordTextField.text = ""
         
         registerKeyboardNotification()
-        //scrollView.contentOffset = CGPoint(x: 0, y: 123)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -39,12 +38,12 @@ class LoginViewController: UIViewController {
         removeKeyboardNotification()
     }
     
-    func registerKeyboardNotification() {
+    fileprivate func registerKeyboardNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
-    @objc func keyboardWillShow(_ notification: NSNotification) {
+    @objc fileprivate func keyboardWillShow(_ notification: NSNotification) {
         guard let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
         let keyboardSize = keyboardFrame.cgRectValue
         
@@ -52,7 +51,7 @@ class LoginViewController: UIViewController {
         scrollView.contentOffset = CGPoint(x: 0, y: keyboardSize.height)
     }
     
-    @objc func keyboardWillHide(_ notification: NSNotification) {
+    @objc fileprivate func keyboardWillHide(_ notification: NSNotification) {
         scrollView.contentSize = CGSize(width: self.view.bounds.size.width, height: view.bounds.size.height)
         scrollView.contentOffset = CGPoint.zero
     }

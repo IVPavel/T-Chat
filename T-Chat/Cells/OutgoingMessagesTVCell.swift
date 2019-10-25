@@ -13,14 +13,14 @@ class OutgoingMessagesTVCell: UITableViewCell {
     let view: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .blue
+        view.backgroundColor = #colorLiteral(red: 0.8882181644, green: 0.9984032512, blue: 0.7793390155, alpha: 1)
         view.layer.cornerRadius = 12
         return view
     }()
     let messageTextLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textColor = .white
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -35,7 +35,7 @@ class OutgoingMessagesTVCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupUICell() {
+    fileprivate func setupUICell() {        
         contentView.addSubview(view)
         view.addSubview(messageTextLabel)
         

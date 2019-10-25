@@ -10,6 +10,7 @@
 		5C099811235FF59900DC5F1C /* IncomingMessageTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C099810235FF59900DC5F1C /* IncomingMessageTVCell.swift */; };
 		5C0998132360B77300DC5F1C /* Date + milliseconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0998122360B77300DC5F1C /* Date + milliseconds.swift */; };
 		5C2C8499235DD1690045C159 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8498235DD1690045C159 /* UsersTableViewController.swift */; };
+		5C31B6E82361DFA700ABEE1B /* AudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C31B6E72361DFA700ABEE1B /* AudioMessage.swift */; };
 		5C37474F235E2351009485E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C37474E235E2351009485E3 /* User.swift */; };
 		5C374752235E2AFC009485E3 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C374751235E2AFC009485E3 /* RegisterViewController.swift */; };
 		5C374755235E89E5009485E3 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C374753235E89E5009485E3 /* TableViewCell.swift */; };
@@ -36,6 +37,7 @@
 		5C099810235FF59900DC5F1C /* IncomingMessageTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingMessageTVCell.swift; sourceTree = "<group>"; };
 		5C0998122360B77300DC5F1C /* Date + milliseconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + milliseconds.swift"; sourceTree = "<group>"; };
 		5C2C8498235DD1690045C159 /* UsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
+		5C31B6E72361DFA700ABEE1B /* AudioMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AudioMessage.swift; path = "T-Chat/Controllers/AudioMessage.swift"; sourceTree = SOURCE_ROOT; };
 		5C37474E235E2351009485E3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		5C374751235E2AFC009485E3 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		5C374753235E89E5009485E3 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 		5CA8C693235FB077008FC2CF /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				5C31B6E72361DFA700ABEE1B /* AudioMessage.swift */,
 				5CA8C68A235F7E39008FC2CF /* ChatFBServices.swift */,
 			);
 			path = Services;
@@ -296,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C6919C7235DC390005A0A35 /* LoginViewController.swift in Sources */,
+				5C31B6E82361DFA700ABEE1B /* AudioMessage.swift in Sources */,
 				5C0998132360B77300DC5F1C /* Date + milliseconds.swift in Sources */,
 				5C6919C3235DC390005A0A35 /* AppDelegate.swift in Sources */,
 				5C374759235E9757009485E3 /* ChatViewController.swift in Sources */,
