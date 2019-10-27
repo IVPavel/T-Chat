@@ -34,37 +34,20 @@ class ChatViewController: UIViewController {
     }()
     let sendButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Send", for: .normal)
+        //button.setTitle("Send", for: .normal)
+        button.setTitle("Record", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = #colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1)
+        //button.backgroundColor = #colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1)
+        button.backgroundColor = #colorLiteral(red: 1, green: 0.2023726702, blue: 0.06828198582, alpha: 1)
+        //button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
+        button.addTarget(self, action: #selector(startRecordAudio), for: .touchDown)
         button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
         button.layer.cornerRadius = 5
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    let stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .center
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    let recordAudioButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "Talk"), for: .normal)
-        button.addTarget(self, action: #selector(method), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    let addFielButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "Article"), for: .normal)
-        button.addTarget(self, action: #selector(method), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
     
+    var recordAudio = RecordAndPlayAudioMessege() // изменит на ?
     fileprivate let cellIndetifireOutgoing = "Cell_Outgoing"
     fileprivate let cellIndetifireIncoming = "Cell_Incoming"
     var user: UserProfile? {
@@ -86,6 +69,8 @@ class ChatViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        //download user messages
         guard let toUserId = user?.id, let currentUser = ChatFBServices().currentUser?.uid else { return }
         
         ChatFBServices().getMessages(currentUser: currentUser, toUserId: toUserId) { [weak self] (_messages) in
@@ -106,10 +91,6 @@ class ChatViewController: UIViewController {
         view.addSubview(tableView)
         contentView.addSubview(messageTextView)
         contentView.addSubview(sendButton)
-        stackView.addArrangedSubview(addFielButton)
-        stackView.addArrangedSubview(recordAudioButton)
-        //contentView.addSubview(stackView)
-        
         
         let margins = safeArea()
         contentView.leftAnchor.constraint(equalTo: margins.leftAnchor).isActive = true
@@ -123,14 +104,9 @@ class ChatViewController: UIViewController {
         messageTextView.heightAnchor.constraint(equalToConstant: 34).isActive = true
         
         contentView.trailingAnchor.constraint(equalTo: sendButton.trailingAnchor, constant: 16).isActive = true
-        contentView.bottomAnchor.constraint(equalTo: sendButton.bottomAnchor, constant: 8).isActive = true
+        sendButton.bottomAnchor.constraint(equalTo: messageTextView.bottomAnchor).isActive = true
         sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
         sendButton.heightAnchor.constraint(equalToConstant: 34).isActive = true
-        
-//        contentView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 16).isActive = true
-//        contentView.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 8).isActive = true
-//        stackView.widthAnchor.constraint(equalToConstant: 80).isActive = true
-//        stackView.heightAnchor.constraint(equalToConstant: 34).isActive = true
         
         //constraint tableView
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -162,9 +138,13 @@ class ChatViewController: UIViewController {
         self.messageTextView.delegate = self
     }
     
+    @objc fileprivate func startRecordAudio() {
+        recordAudio.recordAudio()
+    }
+    
     @objc func sendMessage(_ sender: UIButton) {
-        ChatFBServices().sendMassege(user: user, text: messageTextView.text)
-        messageTextView.text = ""
+        recordAudio.stopAudioRecord()
+        ChatFBServices().sendMessage(user: user, text: "", typeMessage: .audio)
         
         tableView.reloadData()
         tableView.scrollToBottom()
@@ -183,14 +163,14 @@ extension ChatViewController: UITableViewDataSource {
         if mass.fromIdUser == currentUser {
             let cellOut = tableView.dequeueReusableCell(withIdentifier: cellIndetifireOutgoing, for: indexPath) as! OutgoingMessagesTVCell
             
-            cellOut.messageTextLabel.text = mass.textMessage
+            cellOut.messageTextLabel.text = mass.message
             cellOut.backgroundColor = .clear
             
             return cellOut
         } else {
             let cellInc = tableView.dequeueReusableCell(withIdentifier: cellIndetifireIncoming, for: indexPath) as! IncomingMessageTVCell
             
-            cellInc.messageTextLabel.text = mass.textMessage
+            cellInc.messageTextLabel.text = mass.message
             cellInc.backgroundColor = .clear
             
             return cellInc
@@ -200,17 +180,17 @@ extension ChatViewController: UITableViewDataSource {
 
 extension ChatViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray {
-            textView.text = nil
-            textView.textColor = UIColor.black
-        }
+//        if textView.textColor == UIColor.lightGray {
+//            textView.text = nil
+//            textView.textColor = UIColor.black
+//        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text == "" {
-            textView.text = "Message"
-            textView.textColor = UIColor.lightGray
-        }
+//        if textView.text == "" {
+//            textView.text = "Message"
+//            textView.textColor = UIColor.lightGray
+//        }
     }
 }
 

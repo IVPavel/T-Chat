@@ -8,10 +8,12 @@
 
 import Foundation
 import Firebase
+import AVFoundation
 
 final class ChatFBServices {
     static var ref: DatabaseReference!
     let currentUser = Auth.auth().currentUser
+    let storegeRef = Storage.storage().reference()
     
     static func chakAuth(handler: @escaping() -> ()) {
        Auth.auth().addStateDidChangeListener { (auth, user) in
@@ -46,6 +48,61 @@ final class ChatFBServices {
                 compliton(nil, error)
             }
         }
+    }
+    
+    private func uploadAudioMessage(user: UserProfile?, compliton: @escaping(URL) -> Void) {
+        let localFile = RecordAndPlayAudioMessege().getLocalFile()
+        guard let toUserId = user?.id, let currentUser = currentUser else { return }
+        let ref = storegeRef.child("\(currentUser.uid) and \(toUserId)").child("Audio Message/\(Date().millisecondsSince1970).m4a")
+        
+        ref.putFile(from: localFile, metadata: nil) { (metadata, error) in
+            switch metadata {
+            case .some(_):
+                print(Thread.current)
+                ref.downloadURL { (url, error) in
+                    switch url {
+                    case .some(_):
+                        guard let url = url else { return }
+                        compliton(url)
+                    case .none:
+                        print("URL not found", error!)
+                    }
+                }
+            case .none:
+                print("File not found::", error!)
+            }
+        }
+    }
+    
+    func sendMessage(user: UserProfile?, text: String?, typeMessage: TypeMessage) {
+        guard let toUserId = user?.id,
+            let currentUser = currentUser?.uid,
+            var mess = text else { return }
+        let refFrom = Database.database().reference().child("messages").child("\(currentUser) and \(toUserId)")
+        let refTo = Database.database().reference().child("messages").child("\(toUserId) and \(currentUser)")
+        
+        var type = String()
+        
+        switch typeMessage {
+        case .text:
+            type = "text"
+        case .audio:
+            type = "audio"
+            self.uploadAudioMessage(user: user) { urlToAudio in
+                mess = urlToAudio.absoluteString
+                
+                let message = Message(typeMessage: type,
+                                      toIdUser: toUserId,
+                                      fromIdUser: currentUser,
+                                      date: Date().timeIntervalSince1970,
+                                      message: mess)
+
+                refTo.child("\(Date().millisecondsSince1970)").setValue(message.convertToDictionary())
+                refFrom.child("\(Date().millisecondsSince1970)").setValue(message.convertToDictionary())
+            }
+        }
+        
+        
     }
     
     func createUser(email: String, password: String, username: String, complition: @escaping(AuthDataResult?, Error?) -> Void) {
@@ -86,23 +143,6 @@ final class ChatFBServices {
         } catch let signOutError as NSError {
             print ("Error signing out: ", signOutError)
         }
-    }
-    
-    func sendMassege(user: UserProfile?, text: String?) {
-        guard let toUserId = user?.id, let currentUser = Auth.auth().currentUser?.uid else { return }
-        let refFrom = Database.database().reference().child("messages").child("\(currentUser) and \(toUserId)")
-        let refTo = Database.database().reference().child("messages").child("\(toUserId) and \(currentUser)")
-        
-        let toIdUser = toUserId
-        let fromIdUser = currentUser
-        let dateSend = (Date().timeIntervalSince1970)
-        guard let textMessage = text, textMessage != "" else { return }
-        
-        let valueTo = ["textMessage" : textMessage, "toIdUser" : toIdUser, "fromIdUser" : fromIdUser, "dateSend" : dateSend] as [String : Any]
-        let valueFrom = ["textMessage" : textMessage, "toIdUser" : toIdUser, "fromIdUser" : fromIdUser, "dateSend" : dateSend] as [String : Any]
-        
-        refTo.child("\(Date().millisecondsSince1970)").setValue(valueTo)
-        refFrom.child("\(Date().millisecondsSince1970)").setValue(valueFrom)
     }
     
     func getUsers(complition: @escaping([UserProfile]?, UserProfile?) -> Void) {

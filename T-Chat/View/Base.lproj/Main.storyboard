@@ -154,26 +154,6 @@
                     <view key="view" contentMode="scaleToFill" id="9d1-yv-beS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="Gv0-DQ-mZa">
-                                <rect key="frame" x="79" y="245" width="80" height="34"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1u-Vz-Cf0">
-                                        <rect key="frame" x="0.0" y="0.0" width="35.666666666666664" height="34"/>
-                                        <state key="normal" title="Button" image="paperclip" catalog="system"/>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dmm-he-VoF">
-                                        <rect key="frame" x="44.666666666666657" y="0.0" width="35.333333333333343" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Button" image="mic.fill" catalog="system"/>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="g70-hn-11H"/>
-                                    <constraint firstAttribute="height" constant="34" id="jxe-lj-oF9"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="ro5-0m-SRs"/>
                     </view>
@@ -204,7 +184,5 @@
     </scenes>
     <resources>
         <image name="list.dash" catalog="system" width="64" height="42"/>
-        <image name="mic.fill" catalog="system" width="54" height="64"/>
-        <image name="paperclip" catalog="system" width="64" height="64"/>
     </resources>
 </document>

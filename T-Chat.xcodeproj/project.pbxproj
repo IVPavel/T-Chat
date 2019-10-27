@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C099811235FF59900DC5F1C /* IncomingMessageTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C099810235FF59900DC5F1C /* IncomingMessageTVCell.swift */; };
-		5C0998132360B77300DC5F1C /* Date + milliseconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0998122360B77300DC5F1C /* Date + milliseconds.swift */; };
+		5C0998132360B77300DC5F1C /* Date + Milliseconds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0998122360B77300DC5F1C /* Date + Milliseconds.swift */; };
 		5C2C8499235DD1690045C159 /* UsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2C8498235DD1690045C159 /* UsersTableViewController.swift */; };
 		5C31B6E82361DFA700ABEE1B /* AudioMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C31B6E72361DFA700ABEE1B /* AudioMessage.swift */; };
 		5C37474F235E2351009485E3 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C37474E235E2351009485E3 /* User.swift */; };
@@ -27,6 +27,7 @@
 		5CA8C689235F5DBE008FC2CF /* OutgoingMessagesTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8C688235F5DBE008FC2CF /* OutgoingMessagesTVCell.swift */; };
 		5CA8C68B235F7E39008FC2CF /* ChatFBServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8C68A235F7E39008FC2CF /* ChatFBServices.swift */; };
 		5CA8C68D235F848A008FC2CF /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA8C68C235F848A008FC2CF /* Message.swift */; };
+		5CD25FFF236627BB00E9C803 /* TypeMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CD25FFE236627BB00E9C803 /* TypeMessage.swift */; };
 		E6A79CC89D35FBB779638FE8 /* Pods_T_Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F747253B0AE11456AA2E07 /* Pods_T_Chat.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,7 +36,7 @@
 		1361C40E26E2EDC26D587FBB /* Pods-T-Chat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-T-Chat.release.xcconfig"; path = "Target Support Files/Pods-T-Chat/Pods-T-Chat.release.xcconfig"; sourceTree = "<group>"; };
 		3A9D25892E48A6D986D682A3 /* Pods-T-Chat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-T-Chat.debug.xcconfig"; path = "Target Support Files/Pods-T-Chat/Pods-T-Chat.debug.xcconfig"; sourceTree = "<group>"; };
 		5C099810235FF59900DC5F1C /* IncomingMessageTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingMessageTVCell.swift; sourceTree = "<group>"; };
-		5C0998122360B77300DC5F1C /* Date + milliseconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + milliseconds.swift"; sourceTree = "<group>"; };
+		5C0998122360B77300DC5F1C /* Date + Milliseconds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date + Milliseconds.swift"; sourceTree = "<group>"; };
 		5C2C8498235DD1690045C159 /* UsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTableViewController.swift; sourceTree = "<group>"; };
 		5C31B6E72361DFA700ABEE1B /* AudioMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AudioMessage.swift; path = "T-Chat/Controllers/AudioMessage.swift"; sourceTree = SOURCE_ROOT; };
 		5C37474E235E2351009485E3 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -56,6 +57,7 @@
 		5CA8C688235F5DBE008FC2CF /* OutgoingMessagesTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingMessagesTVCell.swift; sourceTree = "<group>"; };
 		5CA8C68A235F7E39008FC2CF /* ChatFBServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatFBServices.swift; sourceTree = "<group>"; };
 		5CA8C68C235F848A008FC2CF /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		5CD25FFE236627BB00E9C803 /* TypeMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +96,7 @@
 			children = (
 				5C37474E235E2351009485E3 /* User.swift */,
 				5CA8C68C235F848A008FC2CF /* Message.swift */,
+				5CD25FFE236627BB00E9C803 /* TypeMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -148,7 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				5C968852235FCD7E00BCA055 /* UITableView + Scroll.swift */,
-				5C0998122360B77300DC5F1C /* Date + milliseconds.swift */,
+				5C0998122360B77300DC5F1C /* Date + Milliseconds.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -300,7 +303,7 @@
 			files = (
 				5C6919C7235DC390005A0A35 /* LoginViewController.swift in Sources */,
 				5C31B6E82361DFA700ABEE1B /* AudioMessage.swift in Sources */,
-				5C0998132360B77300DC5F1C /* Date + milliseconds.swift in Sources */,
+				5C0998132360B77300DC5F1C /* Date + Milliseconds.swift in Sources */,
 				5C6919C3235DC390005A0A35 /* AppDelegate.swift in Sources */,
 				5C374759235E9757009485E3 /* ChatViewController.swift in Sources */,
 				5C968853235FCD7E00BCA055 /* UITableView + Scroll.swift in Sources */,
@@ -313,6 +316,7 @@
 				5C6919C5235DC390005A0A35 /* SceneDelegate.swift in Sources */,
 				5CA8C68B235F7E39008FC2CF /* ChatFBServices.swift in Sources */,
 				5C099811235FF59900DC5F1C /* IncomingMessageTVCell.swift in Sources */,
+				5CD25FFF236627BB00E9C803 /* TypeMessage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

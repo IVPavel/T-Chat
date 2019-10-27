@@ -10,37 +10,40 @@ import Foundation
 import AVFoundation
 
 class RecordAndPlayAudioMessege: NSObject {
-    var soundRecord: AVAudioRecorder!
-    var soundPlayer: AVAudioPlayer!
+    fileprivate var soundRecord: AVAudioRecorder!
+    fileprivate var soundPlayer: AVAudioPlayer!
     
-    let filename = "audioFile.m4a"
-    
-    override init() {
-        super.init()
-        self.setupRecorder()
-    }
+    fileprivate let filename = "record.m4a"
     
     func recordAudio() {
+        self.setupRecorder()
         soundRecord.record()
     }
     
+    func stopAudioRecord() {
+        soundRecord.stop()
+    }
+    
     func palayAudio() {
-        setupPlayer()
+        self.setupPlayer()
         soundPlayer.play()
     }
     
-    fileprivate func getDocumentDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .applicationDirectory, in: .userDomainMask)
+    func getDocumentDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         return paths[0]
+    }
+    
+    func getLocalFile() -> URL {
+        return getDocumentDirectory().appendingPathComponent(filename)
     }
 
     fileprivate func setupRecorder() {
         let audioFileame = getDocumentDirectory().appendingPathComponent(filename)
-        let recordSetting = [AVFormatIDKey : kAudioFormatAppleLossless,
-                             AVEncoderAudioQualityKey : AVAudioQuality.max.rawValue,
-                             AVEncoderBitRateKey : 320000,
-                             AVNumberOfChannelsKey : 2,
-                             AVSampleRateKey : 44100.2] as [String : Any]
+        let recordSetting = [AVFormatIDKey : Int(kAudioFormatMPEG4AAC),
+                             AVSampleRateKey: 12000,
+                             AVNumberOfChannelsKey: 1,
+                             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue]
 
         do {
             soundRecord = try AVAudioRecorder(url: audioFileame, settings: recordSetting)
