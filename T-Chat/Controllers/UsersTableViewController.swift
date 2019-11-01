@@ -43,7 +43,7 @@ class UsersTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifire, for: indexPath) as! TableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifire, for: indexPath) as! UsersTableViewCell
         let user = users[indexPath.row]
 
         cell.nameLabel.text = user.username
@@ -54,7 +54,7 @@ class UsersTableViewController: UITableViewController {
     
     // MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatVC = storyboard?.instantiateViewController(withIdentifier: "ChatSID") as! ChatViewController
+        let chatVC = ChatViewController()
         self.navigationController?.pushViewController(chatVC, animated: true)
         chatVC.user = users[indexPath.row]
     }

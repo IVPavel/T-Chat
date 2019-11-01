@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OutgoingMessagesTVCell: UITableViewCell {
+class TextMessagesTVCell: UITableViewCell {
     
     let view: UIView = {
         let view = UIView()
@@ -25,6 +25,9 @@ class OutgoingMessagesTVCell: UITableViewCell {
         return label
     }()
     
+    var leftAnchorView: NSLayoutConstraint?
+    var rightAnchorView: NSLayoutConstraint?
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -39,10 +42,12 @@ class OutgoingMessagesTVCell: UITableViewCell {
         contentView.addSubview(view)
         view.addSubview(messageTextLabel)
         
-        contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 4).isActive = true
+        view.widthAnchor.constraint(lessThanOrEqualToConstant: 200).isActive = true
         view.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4).isActive = true
-        contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 8).isActive = true
-        view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: contentView.frame.width / 3).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 4).isActive = true
+        
+        rightAnchorView = contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 8)
+        leftAnchorView = view.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8)
         
         messageTextLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 8).isActive = true
         messageTextLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8).isActive = true

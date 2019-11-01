@@ -34,10 +34,8 @@ class ChatViewController: UIViewController {
     }()
     let sendButton: UIButton = {
         let button = UIButton()
-        //button.setTitle("Send", for: .normal)
         button.setTitle("Record", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        //button.backgroundColor = #colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1)
         button.backgroundColor = #colorLiteral(red: 1, green: 0.2023726702, blue: 0.06828198582, alpha: 1)
         //button.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
         button.addTarget(self, action: #selector(startRecordAudio), for: .touchDown)
@@ -48,8 +46,8 @@ class ChatViewController: UIViewController {
     }()
     
     var recordAudio = RecordAndPlayAudioMessege() // изменит на ?
-    fileprivate let cellIndetifireOutgoing = "Cell_Outgoing"
-    fileprivate let cellIndetifireIncoming = "Cell_Incoming"
+    fileprivate let cellIndetifireText = "TextCell"
+    fileprivate let cellIndetifireAudio = "AudioCell"
     var user: UserProfile? {
         didSet {
             guard let name = user?.username, let _ = user?.imageProfile, let _ = user?.email else { return }
@@ -128,8 +126,8 @@ class ChatViewController: UIViewController {
     fileprivate func setupTableView() {
         tableView.dataSource = self
         tableView.separatorColor = .clear
-        tableView.register(OutgoingMessagesTVCell.self, forCellReuseIdentifier: cellIndetifireOutgoing)
-        tableView.register(IncomingMessageTVCell.self, forCellReuseIdentifier: cellIndetifireIncoming)
+        tableView.register(TextMessagesTVCell.self, forCellReuseIdentifier: cellIndetifireText)
+        tableView.register(AudioMessageTVCell.self, forCellReuseIdentifier: cellIndetifireAudio)
     }
     
     fileprivate func setupTextView() {
@@ -139,15 +137,28 @@ class ChatViewController: UIViewController {
     }
     
     @objc fileprivate func startRecordAudio() {
+        print("startRecordAudio")
         recordAudio.recordAudio()
     }
     
     @objc func sendMessage(_ sender: UIButton) {
-        recordAudio.stopAudioRecord()
-        ChatFBServices().sendMessage(user: user, text: "", typeMessage: .audio)
+        guard let textWithButton = sendButton.titleLabel?.text else { return }
+        if sendButton.backgroundColor == #colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1)  && textWithButton == "Send" {
+            guard let text = messageTextView.text, text != "" else { return }
+            ChatFBServices().sendMessage(user: user, text: text, typeMessage: .text) {
+            }
+            messageTextView.text = ""
+            sendButton.backgroundColor = #colorLiteral(red: 1, green: 0.2023726702, blue: 0.06828198582, alpha: 1)
+            sendButton.setTitle("Record", for: .normal)
+            messageTextView.endEditing(true)
+        } else {
+            recordAudio.stopAudioRecord()
+            ChatFBServices().sendMessage(user: user, text: "", typeMessage: .audio) {
+                self.tableView.reloadData()
+            }
+        }
         
         tableView.reloadData()
-        tableView.scrollToBottom()
     }
 }
 
@@ -157,40 +168,73 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIndetifireText, for: indexPath) as! TextMessagesTVCell
+        let cellAudio = tableView.dequeueReusableCell(withIdentifier: cellIndetifireAudio, for: indexPath) as! AudioMessageTVCell
         let mass = messages[indexPath.row]
         guard let currentUser = ChatFBServices().currentUser?.uid else { return UITableViewCell() }
         
-        if mass.fromIdUser == currentUser {
-            let cellOut = tableView.dequeueReusableCell(withIdentifier: cellIndetifireOutgoing, for: indexPath) as! OutgoingMessagesTVCell
-            
-            cellOut.messageTextLabel.text = mass.message
-            cellOut.backgroundColor = .clear
-            
-            return cellOut
+        if mass.typeMessage == "text" {
+            if mass.fromIdUser == currentUser {
+                cell.rightAnchorView?.isActive = true
+                cell.leftAnchorView?.isActive = false
+                
+                cell.messageTextLabel.text = mass.message
+                cell.backgroundColor = .clear
+                cell.view.backgroundColor = #colorLiteral(red: 0.8882181644, green: 0.9984032512, blue: 0.7793390155, alpha: 1)
+                return cell
+            } else {
+                cell.leftAnchorView?.isActive = true
+                cell.rightAnchorView?.isActive = false
+
+                cell.messageTextLabel.text = mass.message
+                cell.backgroundColor = .clear
+                cell.view.backgroundColor = .white
+                return cell
+            }
+        } else if mass.typeMessage == "audio" {
+            if mass.fromIdUser == currentUser {
+                cellAudio.rightAnchorView?.isActive = true
+                cellAudio.leftAnchorView?.isActive = false
+                cellAudio.view.backgroundColor = #colorLiteral(red: 0.8882181644, green: 0.9984032512, blue: 0.7793390155, alpha: 1)
+                
+                cellAudio.backgroundColor = .clear
+                return cellAudio
+            } else {
+                cellAudio.leftAnchorView?.isActive = true
+                cellAudio.rightAnchorView?.isActive = false
+                cellAudio.view.backgroundColor = .white
+                
+                cellAudio.backgroundColor = .clear
+                return cellAudio
+            }
         } else {
-            let cellInc = tableView.dequeueReusableCell(withIdentifier: cellIndetifireIncoming, for: indexPath) as! IncomingMessageTVCell
-            
-            cellInc.messageTextLabel.text = mass.message
-            cellInc.backgroundColor = .clear
-            
-            return cellInc
+            let err = UITableViewCell()
+            err.backgroundColor = .red
+            return err
         }
     }
 }
 
 extension ChatViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-//        if textView.textColor == UIColor.lightGray {
-//            textView.text = nil
-//            textView.textColor = UIColor.black
-//        }
+        if textView.text != "" {
+            textView.text = nil
+            textView.textColor = UIColor.black
+            
+            let newPosition = textView.beginningOfDocument
+            textView.selectedTextRange = textView.textRange(from: newPosition, to: newPosition)
+            
+            sendButton.removeTarget(self, action: #selector(startRecordAudio), for: .touchDown)
+            sendButton.backgroundColor = #colorLiteral(red: 0, green: 0.4797514677, blue: 0.9984372258, alpha: 1)
+            sendButton.setTitle("Send", for: .normal)
+        }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
-//        if textView.text == "" {
-//            textView.text = "Message"
-//            textView.textColor = UIColor.lightGray
-//        }
+        if textView.text == "" {
+            textView.text = "Message"
+            textView.textColor = UIColor.lightGray
+        }
     }
 }
 

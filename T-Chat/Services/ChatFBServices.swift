@@ -55,10 +55,9 @@ final class ChatFBServices {
         guard let toUserId = user?.id, let currentUser = currentUser else { return }
         let ref = storegeRef.child("\(currentUser.uid) and \(toUserId)").child("Audio Message/\(Date().millisecondsSince1970).m4a")
         
-        ref.putFile(from: localFile, metadata: nil) { (metadata, error) in
+        let task = ref.putFile(from: localFile, metadata: nil) { (metadata, error) in
             switch metadata {
             case .some(_):
-                print(Thread.current)
                 ref.downloadURL { (url, error) in
                     switch url {
                     case .some(_):
@@ -72,9 +71,14 @@ final class ChatFBServices {
                 print("File not found::", error!)
             }
         }
+        
+        task.observe(.progress) { (snapshot) in
+            guard let progress = snapshot.progress?.fractionCompleted else { return }
+            print("Progress:: ", progress)
+        }
     }
     
-    func sendMessage(user: UserProfile?, text: String?, typeMessage: TypeMessage) {
+    func sendMessage(user: UserProfile?, text: String?, typeMessage: TypeMessage, complition: @escaping() -> Void) {
         guard let toUserId = user?.id,
             let currentUser = currentUser?.uid,
             var mess = text else { return }
@@ -82,27 +86,38 @@ final class ChatFBServices {
         let refTo = Database.database().reference().child("messages").child("\(toUserId) and \(currentUser)")
         
         var type = String()
+        var message: Message?
+        
+        let date = Date().millisecondsSince1970
         
         switch typeMessage {
         case .text:
             type = "text"
+            message = Message(typeMessage: type,
+            toIdUser: toUserId,
+            fromIdUser: currentUser,
+            date: Date().timeIntervalSince1970,
+            message: mess)
         case .audio:
             type = "audio"
-            self.uploadAudioMessage(user: user) { urlToAudio in
-                mess = urlToAudio.absoluteString
+            self.uploadAudioMessage(user: user) { (urlAudio)  in
+                mess = urlAudio.absoluteString
+                message = Message(typeMessage: type,
+                                  toIdUser: toUserId,
+                                  fromIdUser: currentUser,
+                                  date: Date().timeIntervalSince1970,
+                                  message: mess)
                 
-                let message = Message(typeMessage: type,
-                                      toIdUser: toUserId,
-                                      fromIdUser: currentUser,
-                                      date: Date().timeIntervalSince1970,
-                                      message: mess)
-
-                refTo.child("\(Date().millisecondsSince1970)").setValue(message.convertToDictionary())
-                refFrom.child("\(Date().millisecondsSince1970)").setValue(message.convertToDictionary())
+                let date1 = date
+                
+                refTo.child("\(date1)").setValue(message?.convertToDictionary())
+                refFrom.child("\(date1)").setValue(message?.convertToDictionary())
+                complition()
             }
         }
         
-        
+        refTo.child("\(date)").setValue(message?.convertToDictionary())
+        refFrom.child("\(date)").setValue(message?.convertToDictionary())
     }
     
     func createUser(email: String, password: String, username: String, complition: @escaping(AuthDataResult?, Error?) -> Void) {
