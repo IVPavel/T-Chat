@@ -248,6 +248,11 @@ class ChatCollectionViewController: UICollectionViewController {
         guard let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double else { return }
         
         toolsViewBottomAnchor?.constant = -keyboardFrame.height + hideEmptyAreaView.frame.height
+        
+        collectionView.frame = CGRect(x: 0,
+                                      y: 0,
+                                      width: collectionView.frame.width,
+                                      height: collectionView.frame.height - keyboardFrame.height + 50)
 
         UIView.animate(withDuration: keyboardDuration) {
             self.view.layoutIfNeeded()
@@ -258,6 +263,8 @@ class ChatCollectionViewController: UICollectionViewController {
         toolsViewBottomAnchor?.constant = 0
         
         guard let keyboardDuration = notification.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double else { return }
+        
+        collectionView.frame = view.bounds
         
         UIView.animate(withDuration: keyboardDuration) {
             self.view.layoutIfNeeded()
