@@ -1,6 +1,6 @@
 ## T-Chat
 
-![](resourcesREADME/Example.gif)
+![](resourcesREADME/example.gif)
 
 links on record audio message:
 
