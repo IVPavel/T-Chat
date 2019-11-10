@@ -54,9 +54,10 @@ class UsersTableViewController: UITableViewController {
     
     // MARK: - Table view delegate
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let chatVC = ChatViewController()
-        self.navigationController?.pushViewController(chatVC, animated: true)
-        chatVC.user = users[indexPath.row]
+        let layout = ChatFlowLayout()
+        let collectionView = ChatCollectionViewController(collectionViewLayout: layout)
+        self.navigationController?.pushViewController(collectionView, animated: true)
+        collectionView.user = users[indexPath.row]
     }
     
     @IBAction func signOut(_ sender: UIBarButtonItem) {

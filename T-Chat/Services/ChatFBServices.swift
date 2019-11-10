@@ -52,7 +52,7 @@ final class ChatFBServices {
     
     private func uploadAudioMessage(user: UserProfile?, compliton: @escaping(URL) -> Void) {
         let localFile = RecordAndPlayAudioMessege().getLocalFile()
-        guard let toUserId = user?.id, let currentUser = currentUser else { return }
+        guard let toUserId = user?.id, let currentUser = ChatFBServices().currentUser else { return }
         let ref = storegeRef.child("\(currentUser.uid) and \(toUserId)").child("Audio Message/\(Date().millisecondsSince1970).m4a")
         
         let task = ref.putFile(from: localFile, metadata: nil) { (metadata, error) in
@@ -80,7 +80,7 @@ final class ChatFBServices {
     
     func sendMessage(user: UserProfile?, text: String?, typeMessage: TypeMessage, complition: @escaping() -> Void) {
         guard let toUserId = user?.id,
-            let currentUser = currentUser?.uid,
+            let currentUser = ChatFBServices().currentUser?.uid,
             var mess = text else { return }
         let refFrom = Database.database().reference().child("messages").child("\(currentUser) and \(toUserId)")
         let refTo = Database.database().reference().child("messages").child("\(toUserId) and \(currentUser)")
